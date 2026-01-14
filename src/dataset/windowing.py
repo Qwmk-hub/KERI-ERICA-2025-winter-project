@@ -1,3 +1,8 @@
+import pandas as pd
+import numpy as np
+
+from src.features.fourier_transform import fft_features
+
 def build_sliding_window_samples(type_df, lookback=28, horizon=7, top_k=3):
     """특정 충전방식 데이터에 대해 슬라이딩 윈도우 샘플 생성"""
     type_df = type_df.sort_values('일자').reset_index(drop=True)
@@ -27,7 +32,7 @@ def build_sliding_window_samples(type_df, lookback=28, horizon=7, top_k=3):
         }
         
         # 3. FFT 특징 결합
-        fft_feat = extract_fft_features(daily_seq, top_k=top_k)
+        fft_feat = fft_features(daily_seq, top_k=top_k)
         feat.update(fft_feat)
         
         samples.append(feat)
